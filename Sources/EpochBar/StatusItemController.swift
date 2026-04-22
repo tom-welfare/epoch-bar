@@ -1,4 +1,5 @@
 import AppKit
+import ServiceManagement
 
 final class StatusItemController {
     private let statusItem: NSStatusItem
@@ -31,7 +32,31 @@ final class StatusItemController {
     }
 
     private func buildMenu() {
-        let quitItem = NSMenuItem(title: "Quit EpochBar", action: #selector(quit), keyEquivalent: "q")
+        let launchItem = NSMenuItem(
+            title: "Launch at login",
+            action: #selector(toggleLaunchAtLogin),
+            keyEquivalent: ""
+        )
+        launchItem.target = self
+        menu.addItem(launchItem)
+
+        menu.addItem(NSMenuItem.separator())
+
+        let aboutItem = NSMenuItem(
+            title: "About EpochBar",
+            action: #selector(showAbout),
+            keyEquivalent: ""
+        )
+        aboutItem.target = self
+        menu.addItem(aboutItem)
+
+        menu.addItem(NSMenuItem.separator())
+
+        let quitItem = NSMenuItem(
+            title: "Quit EpochBar",
+            action: #selector(quit),
+            keyEquivalent: "q"
+        )
         quitItem.target = self
         menu.addItem(quitItem)
     }
@@ -58,6 +83,9 @@ final class StatusItemController {
     }
 
     private func showMenu() {
+        if let launchItem = menu.items.first {
+            launchItem.state = SMAppService.mainApp.status == .enabled ? .on : .off
+        }
         statusItem.menu = menu
         statusItem.button?.performClick(nil)
         statusItem.menu = nil
@@ -83,6 +111,23 @@ final class StatusItemController {
                 button.title = self.idleTitle
             }
         }
+    }
+
+    @objc private func toggleLaunchAtLogin() {
+        do {
+            if SMAppService.mainApp.status == .enabled {
+                try SMAppService.mainApp.unregister()
+            } else {
+                try SMAppService.mainApp.register()
+            }
+        } catch {
+            NSLog("EpochBar: launch-at-login toggle failed: \(error)")
+        }
+    }
+
+    @objc private func showAbout() {
+        NSApp.activate(ignoringOtherApps: true)
+        NSApp.orderFrontStandardAboutPanel(nil)
     }
 
     @objc private func quit() {
