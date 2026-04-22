@@ -8,10 +8,24 @@ struct ParsedEpoch: Equatable {
 enum EpochParser {
     static func parse(_ raw: String) -> ParsedEpoch? {
         let trimmed = raw.trimmingCharacters(in: .whitespacesAndNewlines)
-        guard trimmed.range(of: #"^\d{10}$"#, options: .regularExpression) != nil,
-              let seconds = Double(trimmed) else {
-            return nil
+        let parsed: ParsedEpoch?
+
+        if trimmed.range(of: #"^\d{10}$"#, options: .regularExpression) != nil,
+           let seconds = Double(trimmed) {
+            parsed = ParsedEpoch(date: Date(timeIntervalSince1970: seconds), hasSubSecond: false)
+        } else if trimmed.range(of: #"^\d{10}\.\d+$"#, options: .regularExpression) != nil,
+                  let seconds = Double(trimmed) {
+            parsed = ParsedEpoch(date: Date(timeIntervalSince1970: seconds), hasSubSecond: true)
+        } else if trimmed.range(of: #"^\d{13}$"#, options: .regularExpression) != nil,
+                  let ms = Double(trimmed) {
+            parsed = ParsedEpoch(date: Date(timeIntervalSince1970: ms / 1000), hasSubSecond: true)
+        } else if trimmed.range(of: #"^\d{16}$"#, options: .regularExpression) != nil,
+                  let us = Double(trimmed) {
+            parsed = ParsedEpoch(date: Date(timeIntervalSince1970: us / 1_000_000), hasSubSecond: true)
+        } else {
+            parsed = nil
         }
-        return ParsedEpoch(date: Date(timeIntervalSince1970: seconds), hasSubSecond: false)
+
+        return parsed
     }
 }
