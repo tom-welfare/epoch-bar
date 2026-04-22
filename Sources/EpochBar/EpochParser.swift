@@ -28,4 +28,23 @@ enum EpochParser {
 
         return parsed
     }
+
+    static func formatISO(_ parsed: ParsedEpoch) -> String {
+        var date = parsed.date
+        if parsed.hasSubSecond {
+            // Truncate (toward zero) to millisecond precision
+            let secs = date.timeIntervalSince1970
+            let truncatedMs = (secs * 1000).rounded(.down) / 1000
+            date = Date(timeIntervalSince1970: truncatedMs)
+        }
+
+        let formatter = ISO8601DateFormatter()
+        formatter.timeZone = TimeZone(identifier: "UTC")
+        if parsed.hasSubSecond {
+            formatter.formatOptions = [.withInternetDateTime, .withFractionalSeconds]
+        } else {
+            formatter.formatOptions = [.withInternetDateTime]
+        }
+        return formatter.string(from: date)
+    }
 }
