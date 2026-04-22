@@ -60,4 +60,33 @@ import Foundation
         let parsed = EpochParser.parse("1735689600.999999")!
         #expect(EpochParser.formatISO(parsed) == "2025-01-01T00:00:00.999Z")
     }
+
+    @Test func rejectsNonNumeric() {
+        #expect(EpochParser.parse("abc") == nil)
+        #expect(EpochParser.parse("1234abc") == nil)
+        #expect(EpochParser.parse("") == nil)
+    }
+
+    @Test func rejectsUnsupportedDigitLengths() {
+        #expect(EpochParser.parse("12345") == nil)            // 5 digits
+        #expect(EpochParser.parse("17356896001") == nil)      // 11 digits
+        #expect(EpochParser.parse("173568960050") == nil)     // 12 digits
+        #expect(EpochParser.parse("17356896005000") == nil)   // 14 digits
+        #expect(EpochParser.parse("173568960050000") == nil)  // 15 digits
+    }
+
+    @Test func rejectsOutOfRangeLow() {
+        // epoch 0 = 1970-01-01, below 2001-01-01 cutoff
+        #expect(EpochParser.parse("0000000000") == nil)
+    }
+
+    @Test func rejectsOutOfRangeHigh() {
+        // 9999999999 = 2286-11-20, above 2099-12-31 cutoff
+        #expect(EpochParser.parse("9999999999") == nil)
+    }
+
+    @Test func trimsWhitespace() {
+        #expect(EpochParser.parse("  1735689600\n") != nil)
+        #expect(EpochParser.parse("\t1735689600  ") != nil)
+    }
 }

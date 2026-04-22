@@ -6,6 +6,9 @@ struct ParsedEpoch: Equatable {
 }
 
 enum EpochParser {
+    private static let minDate = Date(timeIntervalSince1970: 978_307_200)    // 2001-01-01 00:00:00 UTC
+    private static let maxDate = Date(timeIntervalSince1970: 4_102_444_799)  // 2099-12-31 23:59:59 UTC
+
     static func parse(_ raw: String) -> ParsedEpoch? {
         let trimmed = raw.trimmingCharacters(in: .whitespacesAndNewlines)
         let parsed: ParsedEpoch?
@@ -26,7 +29,8 @@ enum EpochParser {
             parsed = nil
         }
 
-        return parsed
+        guard let p = parsed, p.date >= minDate, p.date <= maxDate else { return nil }
+        return p
     }
 
     static func formatISO(_ parsed: ParsedEpoch) -> String {
