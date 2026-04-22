@@ -43,6 +43,27 @@ open /Applications/EpochBar.app
 The "Launch at login" menu item only works reliably when the app is
 installed in `/Applications`.
 
+## Package as a DMG
+
+```bash
+./make-dmg.sh
+```
+
+Produces `.build/EpochBar.dmg` containing `EpochBar.app` and an
+`Applications` drag-target. Hand the DMG to anyone else who wants the app.
+
+The app is ad-hoc signed only, not notarized, so recipients will see a
+Gatekeeper warning the first time they launch it:
+
+> "EpochBar" can't be opened because Apple cannot check it for malicious
+> software.
+
+Tell them to **right-click EpochBar → Open**, then click **Open** in the
+confirmation dialog. macOS remembers the choice and won't prompt again.
+
+(Alternatively they can strip the quarantine flag in a terminal:
+`xattr -dr com.apple.quarantine /Applications/EpochBar.app`.)
+
 ## Tests
 
 ```bash
