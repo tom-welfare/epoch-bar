@@ -2,6 +2,7 @@ import AppKit
 
 @main
 final class AppDelegate: NSObject, NSApplicationDelegate {
+    private let watcher = ClipboardWatcher()
     private var controller: StatusItemController?
 
     static func main() {
@@ -12,6 +13,11 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     }
 
     func applicationDidFinishLaunching(_ notification: Notification) {
-        controller = StatusItemController()
+        controller = StatusItemController(watcher: watcher)
+        watcher.start()
+    }
+
+    func applicationWillTerminate(_ notification: Notification) {
+        watcher.stop()
     }
 }
