@@ -1,7 +1,5 @@
-import XCTest
+import Testing
 
-final class PlaceholderTests: XCTestCase {
-    func testTargetBuilds() {
-        XCTAssertTrue(true)
-    }
+@Test func targetBuilds() {
+    #expect(true)
 }
