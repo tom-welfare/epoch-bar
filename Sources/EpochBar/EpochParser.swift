@@ -25,6 +25,9 @@ enum EpochParser {
         } else if trimmed.range(of: #"^\d{16}$"#, options: .regularExpression) != nil,
                   let us = Double(trimmed) {
             parsed = ParsedEpoch(date: Date(timeIntervalSince1970: us / 1_000_000), hasSubSecond: true)
+        } else if trimmed.range(of: #"^[0-9a-fA-F]{24}$"#, options: .regularExpression) != nil,
+                  let seconds = UInt32(trimmed.prefix(8), radix: 16) {
+            parsed = ParsedEpoch(date: Date(timeIntervalSince1970: TimeInterval(seconds)), hasSubSecond: false)
         } else {
             parsed = nil
         }

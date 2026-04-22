@@ -89,4 +89,27 @@ import Foundation
         #expect(EpochParser.parse("  1735689600\n") != nil)
         #expect(EpochParser.parse("\t1735689600  ") != nil)
     }
+
+    @Test func parsesMongoObjectId() {
+        // 507f1f77bcf86cd799439011: first 4 bytes = 0x507f1f77 = 1351038839 = 2012-10-17T21:13:27Z
+        let parsed = EpochParser.parse("507f1f77bcf86cd799439011")
+        #expect(parsed != nil)
+        #expect(parsed?.hasSubSecond == false)
+        #expect(EpochParser.formatISO(parsed!) == "2012-10-17T21:13:27Z")
+    }
+
+    @Test func parsesUppercaseMongoObjectId() {
+        let parsed = EpochParser.parse("507F1F77BCF86CD799439011")
+        #expect(EpochParser.formatISO(parsed!) == "2012-10-17T21:13:27Z")
+    }
+
+    @Test func rejectsMongoObjectIdWithOutOfRangeTimestamp() {
+        // 00000000... would give epoch 0 = 1970, below 2001-01-01 cutoff
+        #expect(EpochParser.parse("000000000000000000000000") == nil)
+    }
+
+    @Test func rejectsNonHex24CharStrings() {
+        // 24 chars but contains non-hex character
+        #expect(EpochParser.parse("507f1f77bcf86cd79943901g") == nil)
+    }
 }
