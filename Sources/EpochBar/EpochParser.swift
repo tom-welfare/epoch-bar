@@ -1,6 +1,6 @@
 import Foundation
 
-struct ParsedEpoch: Equatable {
+struct ParsedEpoch: Equatable, Sendable {
     let date: Date
     let hasSubSecond: Bool
 }
