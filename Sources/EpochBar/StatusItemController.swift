@@ -8,8 +8,6 @@ final class StatusItemController {
     private var currentISO: String?
     private var flashTimer: Timer?
 
-    private let idleTitle = "⏱"
-
     init(watcher: ClipboardWatcher) {
         self.watcher = watcher
         self.statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
@@ -25,7 +23,10 @@ final class StatusItemController {
 
     private func configureButton() {
         guard let button = statusItem.button else { return }
-        button.title = idleTitle
+        button.image = NSImage(systemSymbolName: "clock", accessibilityDescription: "EpochBar")
+        button.image?.isTemplate = true
+        button.imagePosition = .imageLeft
+        button.title = ""
         button.target = self
         button.action = #selector(handleClick(_:))
         button.sendAction(on: [.leftMouseUp, .rightMouseUp])
@@ -66,10 +67,10 @@ final class StatusItemController {
         if let parsed {
             let iso = EpochParser.formatISO(parsed)
             currentISO = iso
-            button.title = "\(idleTitle) \(iso)"
+            button.title = " \(iso)"
         } else {
             currentISO = nil
-            button.title = idleTitle
+            button.title = ""
         }
     }
 
@@ -101,14 +102,14 @@ final class StatusItemController {
     }
 
     private func flashCopied() {
-        statusItem.button?.title = "\(idleTitle) ✓ copied"
+        statusItem.button?.title = " ✓ copied"
         flashTimer?.invalidate()
         flashTimer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: false) { [weak self] _ in
             guard let self, let button = self.statusItem.button else { return }
             if let iso = self.currentISO {
-                button.title = "\(self.idleTitle) \(iso)"
+                button.title = " \(iso)"
             } else {
-                button.title = self.idleTitle
+                button.title = ""
             }
         }
     }
