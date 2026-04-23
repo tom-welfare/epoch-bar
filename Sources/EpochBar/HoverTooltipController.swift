@@ -82,7 +82,7 @@ final class HoverTooltipController {
         let screenRect = axRectToScreenRect(axRect)
         lastTokenText = token
         lastTokenScreenRect = screenRect
-        panel.show(text: iso, aboveScreenRect: screenRect)
+        panel.show(text: iso, atCursor: screenPoint)
     }
 
     // MARK: - Accessibility query

@@ -10,7 +10,8 @@ final class HoverTooltipPanel {
     private let horizontalPadding: CGFloat = 10
     private let verticalPadding: CGFloat = 4
     private let cornerRadius: CGFloat = 4
-    private let gapAboveToken: CGFloat = 6
+    /// Offset from the cursor so the tooltip sits slightly to the right and above.
+    private let cursorOffset: NSSize = NSSize(width: 14, height: 16)
 
     init() {
         panel = NSPanel(
@@ -45,7 +46,7 @@ final class HoverTooltipPanel {
         panel.contentView = host
     }
 
-    func show(text: String, aboveScreenRect tokenRect: NSRect) {
+    func show(text: String, atCursor cursor: NSPoint) {
         label.stringValue = text
         label.sizeToFit()
 
@@ -56,15 +57,18 @@ final class HoverTooltipPanel {
                              width: label.frame.width, height: label.frame.height)
         host.frame = NSRect(x: 0, y: 0, width: width, height: height)
 
-        var x = tokenRect.midX - width / 2
-        var y = tokenRect.maxY + gapAboveToken  // screen coords: higher y = higher on screen
-        // Keep on-screen
-        if let screen = NSScreen.screens.first(where: { $0.frame.contains(tokenRect) }) ?? NSScreen.main {
+        var x = cursor.x + cursorOffset.width
+        var y = cursor.y + cursorOffset.height
+        if let screen = NSScreen.screens.first(where: { $0.frame.contains(cursor) }) ?? NSScreen.main {
             let vis = screen.visibleFrame
-            x = max(vis.minX + 4, min(x, vis.maxX - width - 4))
-            if y + height > vis.maxY {
-                y = tokenRect.minY - height - gapAboveToken   // flip below if it would clip the top
+            if x + width > vis.maxX - 4 {
+                x = cursor.x - cursorOffset.width - width   // flip to the left
             }
+            if y + height > vis.maxY - 4 {
+                y = cursor.y - cursorOffset.height - height // flip below the cursor
+            }
+            x = max(vis.minX + 4, min(x, vis.maxX - width - 4))
+            y = max(vis.minY + 4, min(y, vis.maxY - height - 4))
         }
 
         panel.setFrame(NSRect(x: x, y: y, width: width, height: height), display: true)
