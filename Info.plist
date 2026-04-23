@@ -9,7 +9,7 @@
     <key>CFBundleIconFile</key>
     <string>Icon</string>
     <key>CFBundleIdentifier</key>
-    <string>com.tomlw.epoch-bar</string>
+    <string>dev.tlw.epoch-bar</string>
     <key>CFBundleInfoDictionaryVersion</key>
     <string>6.0</string>
     <key>CFBundleName</key>
