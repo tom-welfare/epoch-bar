@@ -6,6 +6,8 @@
     <string>en</string>
     <key>CFBundleExecutable</key>
     <string>EpochBar</string>
+    <key>CFBundleIconFile</key>
+    <string>Icon</string>
     <key>CFBundleIdentifier</key>
     <string>com.tomlw.epoch-bar</string>
     <key>CFBundleInfoDictionaryVersion</key>
