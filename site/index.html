@@ -330,9 +330,8 @@ a { color: inherit; text-decoration: none; }
   background: #050810;
   border: 1px solid var(--rule);
   border-radius: 10px;
-  padding: 28px 24px 42px;
+  padding: 56px 24px 28px;
   box-shadow: 0 20px 60px -20px rgba(0, 0, 0, 0.7);
-  overflow: hidden;
   position: relative;
 }
 .mock-editor::before {
@@ -347,8 +346,6 @@ a { color: inherit; text-decoration: none; }
   line-height: 1.8;
   color: #8794b2;
   white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
   position: relative;
 }
 .mock-editor .log-line .meta { color: #5c6a8a; }
@@ -368,9 +365,8 @@ a { color: inherit; text-decoration: none; }
 }
 .mock-editor .ts-tooltip {
   position: absolute;
-  left: 50%;
-  top: calc(100% + 8px);
-  transform: translateX(-50%);
+  left: 0;
+  bottom: calc(100% + 10px);
   background: var(--accent-teal);
   color: #0a1120;
   font-family: 'JetBrains Mono', monospace;
@@ -995,7 +991,7 @@ a { color: inherit; text-decoration: none; }
   <!-- Footer -->
   <footer class="footer">
     <div>
-      Built in Swift 6. Free. No analytics.
+      Built in Swift 6. Free.
     </div>
     <div class="mono">EpochBar · v1.0.0</div>
   </footer>
