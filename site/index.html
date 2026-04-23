@@ -618,7 +618,7 @@ a { color: inherit; text-decoration: none; }
   <header class="topbar">
     <a href="/" class="wordmark">Epoch<em>Bar</em></a>
     <div class="topbar-meta">
-      v1.0.0 &nbsp;·&nbsp; macOS 13+ &nbsp;·&nbsp; <a href="https://github.com/tom-welfare/epoch-bar" target="_blank" rel="noopener">source ↗</a>
+      v1.0.0 &nbsp;·&nbsp; macOS 13+
     </div>
   </header>
 
@@ -646,11 +646,7 @@ a { color: inherit; text-decoration: none; }
       <span class="word"><em>readable</em></span>
       <span class="word">at a glance.</span>
     </h1>
-    <p class="hero-sub">
-      EpochBar watches your clipboard and decodes any timestamp-bearing identifier it finds —
-      <strong>Unix epochs, MongoDB ObjectIds, ULIDs, UUIDv1 / v6 / v7, and Twitter-style snowflakes</strong> —
-      into a UTC ISO 8601 date, right in your menu bar. Click to copy. That's the whole app.
-    </p>
+    <p class="hero-sub">EpochBar watches your clipboard and decodes any timestamp-bearing identifier it finds — <strong>Unix epochs, MongoDB ObjectIds, ULIDs, UUIDv1 / v6 / v7, and Twitter-style snowflakes</strong> — into a UTC ISO 8601 date, right in your menu bar. Click to copy. That's the whole app.</p>
     <div class="hero-cta">
       <a href="/EpochBar.dmg" class="btn-download" download>
         <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
@@ -688,10 +684,7 @@ a { color: inherit; text-decoration: none; }
   <section class="section">
     <div class="section-eyebrow">What it decodes</div>
     <h2 class="section-title">Seven identifier shapes. <em>One</em> answer — the timestamp inside.</h2>
-    <p class="section-lede">
-      Each of the formats below carries a timestamp you rarely get to read directly.
-      EpochBar finds the right bits, converts them, and shows the result. Here's what lives where.
-    </p>
+    <p class="section-lede">Each of the formats below carries a timestamp you rarely get to read directly. EpochBar finds the right bits, converts them, and shows the result. Here's what lives where.</p>
 
     <div class="formats">
 
@@ -714,9 +707,7 @@ a { color: inherit; text-decoration: none; }
             <div class="arrow">→</div>
             <div class="output">2025-01-01T00:00:00Z</div>
           </div>
-          <div class="format-note">
-            Ten digits are seconds; thirteen, milliseconds; sixteen, microseconds. Trailing <code style="font-family:'JetBrains Mono',monospace">.xxx</code> on a ten-digit value is read as fractional seconds. Only values that land between 2001 and 2099 are accepted — random counters need not apply.
-          </div>
+          <div class="format-note">Ten digits are seconds; thirteen, milliseconds; sixteen, microseconds. Trailing <code style="font-family:'JetBrains Mono',monospace">.xxx</code> on a ten-digit value is read as fractional seconds. Only values that land between 2001 and 2099 are accepted — random counters need not apply.</div>
         </div>
       </div>
 
@@ -743,9 +734,7 @@ a { color: inherit; text-decoration: none; }
             <div class="arrow">→</div>
             <div class="output">2012-10-17T21:13:27Z</div>
           </div>
-          <div class="format-note">
-            The first 4 bytes are big-endian Unix seconds. The trailing 8 bytes are a per-process random value and a counter — not needed to read the date.
-          </div>
+          <div class="format-note">The first 4 bytes are big-endian Unix seconds. The trailing 8 bytes are a per-process random value and a counter — not needed to read the date.</div>
         </div>
       </div>
 
@@ -770,9 +759,7 @@ a { color: inherit; text-decoration: none; }
             <div class="arrow">→</div>
             <div class="output">2016-07-30T23:54:10.259Z</div>
           </div>
-          <div class="format-note">
-            The first ten characters decode to a 48-bit millisecond timestamp; the remaining sixteen are random. The Crockford alphabet skips <code style="font-family:'JetBrains Mono',monospace">I L O U</code> so the input is unambiguous.
-          </div>
+          <div class="format-note">The first ten characters decode to a 48-bit millisecond timestamp; the remaining sixteen are random. The Crockford alphabet skips <code style="font-family:'JetBrains Mono',monospace">I L O U</code> so the input is unambiguous.</div>
         </div>
       </div>
 
@@ -803,9 +790,7 @@ a { color: inherit; text-decoration: none; }
             <div class="arrow">→</div>
             <div class="output">2012-07-19T01:41:43.645Z</div>
           </div>
-          <div class="format-note">
-            60 bits of 100-nanosecond intervals since the Gregorian reform on 15 October 1582. Reassembled from three non-contiguous slices, then shifted to the Unix epoch.
-          </div>
+          <div class="format-note">60 bits of 100-nanosecond intervals since the Gregorian reform on 15 October 1582. Reassembled from three non-contiguous slices, then shifted to the Unix epoch.</div>
         </div>
       </div>
 
@@ -836,9 +821,7 @@ a { color: inherit; text-decoration: none; }
             <div class="arrow">→</div>
             <div class="output">2012-07-19T01:41:43.645Z</div>
           </div>
-          <div class="format-note">
-            Same clock as v1, same epoch — but the segments are re-ordered so that two v6 UUIDs generated seconds apart compare correctly as strings. Good for database keys.
-          </div>
+          <div class="format-note">Same clock as v1, same epoch — but the segments are re-ordered so that two v6 UUIDs generated seconds apart compare correctly as strings. Good for database keys.</div>
         </div>
       </div>
 
@@ -865,9 +848,7 @@ a { color: inherit; text-decoration: none; }
             <div class="arrow">→</div>
             <div class="output">2024-01-28T10:35:19.310Z</div>
           </div>
-          <div class="format-note">
-            The modern one: first 48 bits are straight Unix milliseconds. Sortable out of the box, human-readable out of the front.
-          </div>
+          <div class="format-note">The modern one: first 48 bits are straight Unix milliseconds. Sortable out of the box, human-readable out of the front.</div>
         </div>
       </div>
 
@@ -896,9 +877,7 @@ a { color: inherit; text-decoration: none; }
             <div class="arrow">→</div>
             <div class="output">2024-06-10T03:00:17.039Z</div>
           </div>
-          <div class="format-note">
-            Shift right by 22, add Twitter's epoch of 2010-11-04T01:42:54.657Z, and you get Unix ms. Discord, Instagram and others use the same shape with different epochs — shout if you need one of those.
-          </div>
+          <div class="format-note">Shift right by 22, add Twitter's epoch of 2010-11-04T01:42:54.657Z, and you get Unix ms. Discord, Instagram and others use the same shape with different epochs — shout if you need one of those.</div>
         </div>
       </div>
 
@@ -909,9 +888,7 @@ a { color: inherit; text-decoration: none; }
   <section class="section">
     <div class="section-eyebrow">Install</div>
     <h2 class="section-title">Three steps. <em>Forty-eight</em> kilobytes.</h2>
-    <p class="section-lede">
-      Ad-hoc signed, not notarised — so the first launch wants a right-click nudge. After that macOS remembers and it lives in your menu bar forever.
-    </p>
+    <p class="section-lede">Ad-hoc signed, not notarised — so the first launch wants a right-click nudge. After that macOS remembers and it lives in your menu bar forever.</p>
 
     <div class="install">
       <div class="install-step">
@@ -944,7 +921,7 @@ a { color: inherit; text-decoration: none; }
   <!-- Footer -->
   <footer class="footer">
     <div>
-      Built in Swift 6. Free. No analytics. <a href="https://github.com/tom-welfare/epoch-bar" target="_blank" rel="noopener">Source on GitHub ↗</a>
+      Built in Swift 6. Free. No analytics.
     </div>
     <div class="mono">EpochBar · v1.0.0</div>
   </footer>
