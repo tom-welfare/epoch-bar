@@ -888,7 +888,7 @@ a { color: inherit; text-decoration: none; }
   <section class="section">
     <div class="section-eyebrow">Install</div>
     <h2 class="section-title">Three steps. <em>Forty-eight</em> kilobytes.</h2>
-    <p class="section-lede">Ad-hoc signed, not notarised — so the first launch wants a right-click nudge. After that macOS remembers and it lives in your menu bar forever.</p>
+    <p class="section-lede">Ad-hoc signed, not notarised — so the first launch needs you to tell macOS you trust it. After that it remembers and lives in your menu bar forever.</p>
 
     <div class="install">
       <div class="install-step">
@@ -902,9 +902,9 @@ a { color: inherit; text-decoration: none; }
       <div class="install-step">
         <div class="install-num">II.</div>
         <div class="install-step-body">
-          <div class="install-step-title">First launch: right-click → Open</div>
-          <code>right-click /Applications/EpochBar.app → Open → Open</code>
-          <div class="install-step-note">Gatekeeper will warn because the app is only ad-hoc signed. Confirming once teaches macOS to trust it; double-click works from then on.</div>
+          <div class="install-step-title">Bypass Gatekeeper once</div>
+          <code>xattr -dr com.apple.quarantine /Applications/EpochBar.app</code>
+          <div class="install-step-note">EpochBar is ad-hoc signed, not notarised — so macOS refuses to open it until you remove the quarantine flag. The command above is the one-liner; if you prefer the GUI path, double-click the app (macOS will refuse), then open <strong>System Settings → Privacy &amp; Security</strong>, scroll to the blocked-app message, and click <strong>Open Anyway</strong>. Do this once; macOS remembers after that.</div>
         </div>
       </div>
       <div class="install-step">
