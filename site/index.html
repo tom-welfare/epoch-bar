@@ -646,7 +646,7 @@ a { color: inherit; text-decoration: none; }
       <span class="word"><em>readable</em></span>
       <span class="word">at a glance.</span>
     </h1>
-    <p class="hero-sub">EpochBar watches your clipboard and decodes any timestamp-bearing identifier it finds — <strong>Unix epochs, MongoDB ObjectIds, ULIDs, UUIDv1 / v6 / v7, and Twitter-style snowflakes</strong> — into a UTC ISO 8601 date, right in your menu bar. Click to copy. That's the whole app.</p>
+    <p class="hero-sub">EpochBar watches your clipboard and decodes any timestamp-bearing identifier it finds — <strong>Unix epochs, MongoDB ObjectIds, ULIDs, UUIDv1 / v6 / v7, and Twitter-style snowflakes</strong> — into a UTC ISO 8601 date, right in your menu bar. Or select one anywhere — logs, databases, API responses — and a small tooltip pops up next to the cursor with the ISO date. Click to copy. That's the whole app.</p>
     <div class="hero-cta">
       <a href="/EpochBar.dmg" class="btn-download" download>
         <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
@@ -887,7 +887,7 @@ a { color: inherit; text-decoration: none; }
   <!-- Install -->
   <section class="section">
     <div class="section-eyebrow">Install</div>
-    <h2 class="section-title">Three steps. <em>Forty-eight</em> kilobytes.</h2>
+    <h2 class="section-title">Four steps. <em>Forty-eight</em> kilobytes.</h2>
     <p class="section-lede">Ad-hoc signed, not notarised — so the first launch needs you to tell macOS you trust it. After that it remembers and lives in your menu bar forever.</p>
 
     <div class="install">
@@ -909,6 +909,14 @@ a { color: inherit; text-decoration: none; }
       </div>
       <div class="install-step">
         <div class="install-num">III.</div>
+        <div class="install-step-body">
+          <div class="install-step-title">Grant Accessibility access (for the selection tooltip)</div>
+          <code>System Settings → Privacy &amp; Security → Accessibility → ✓ EpochBar</code>
+          <div class="install-step-note">EpochBar will prompt for this on first launch. It's needed so the app can read the text you've selected in another app (iTerm, Safari, TextEdit, etc.) and pop up the decoded ISO date. If you only want the menu-bar clipboard functionality, you can skip this step and toggle the selection tooltip off under <strong>Settings…</strong> in the right-click menu.</div>
+        </div>
+      </div>
+      <div class="install-step">
+        <div class="install-num">IV.</div>
         <div class="install-step-body">
           <div class="install-step-title">Optional: launch at login</div>
           <code>right-click the menu-bar clock → Launch at login</code>
