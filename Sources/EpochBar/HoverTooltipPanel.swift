@@ -30,13 +30,10 @@ final class HoverTooltipPanel {
 
         host = NSView(frame: NSRect(x: 0, y: 0, width: 140, height: 24))
         host.wantsLayer = true
-        host.layer?.backgroundColor = NSColor(calibratedRed: 0.37, green: 0.92, blue: 0.83, alpha: 0.96).cgColor
         host.layer?.cornerRadius = cornerRadius
         host.layer?.masksToBounds = true
 
         label = NSTextField(labelWithString: "")
-        label.font = NSFont.monospacedSystemFont(ofSize: 11, weight: .medium)
-        label.textColor = .black
         label.drawsBackground = false
         label.isBordered = false
         label.alignment = .center
@@ -47,6 +44,11 @@ final class HoverTooltipPanel {
     }
 
     func show(text: String, atCursor cursor: NSPoint) {
+        // Pull appearance fresh each show so prefs changes take effect immediately.
+        host.layer?.backgroundColor = Preferences.tooltipBackground.cgColor
+        label.textColor = Preferences.tooltipForeground
+        label.font = Preferences.tooltipFont
+
         label.stringValue = text
         label.sizeToFit()
 

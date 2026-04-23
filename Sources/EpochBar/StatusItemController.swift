@@ -7,6 +7,7 @@ final class StatusItemController {
     private let menu: NSMenu
     private var currentISO: String?
     private var flashTimer: Timer?
+    private lazy var settingsWindow = SettingsWindowController()
 
     init(watcher: ClipboardWatcher) {
         self.watcher = watcher
@@ -42,6 +43,14 @@ final class StatusItemController {
         menu.addItem(launchItem)
 
         menu.addItem(NSMenuItem.separator())
+
+        let settingsItem = NSMenuItem(
+            title: "Settings…",
+            action: #selector(showSettings),
+            keyEquivalent: ","
+        )
+        settingsItem.target = self
+        menu.addItem(settingsItem)
 
         let aboutItem = NSMenuItem(
             title: "About EpochBar",
@@ -124,6 +133,10 @@ final class StatusItemController {
         } catch {
             NSLog("EpochBar: launch-at-login toggle failed: \(error)")
         }
+    }
+
+    @objc private func showSettings() {
+        settingsWindow.showWindow()
     }
 
     @objc private func showAbout() {
