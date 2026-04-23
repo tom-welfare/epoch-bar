@@ -2,7 +2,8 @@
 .swiftpm/
 Package.resolved
 *.xcodeproj
-.DS_Store
+**/.DS_Store
 Icon.iconset/
 site/EpochBar.dmg
 .wrangler/
+node_modules/

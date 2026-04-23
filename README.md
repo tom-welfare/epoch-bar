@@ -65,6 +65,15 @@ Recent macOS versions (Sonoma / Sequoia) no longer let you bypass this with righ
   Then double-click works normally.
 - **GUI path:** double-click the app so macOS blocks it, then open **System Settings → Privacy & Security**, scroll down to the "EpochBar was blocked" message, click **Open Anyway**, and confirm with your password or Touch ID. macOS remembers the choice.
 
+## Privacy
+
+EpochBar runs entirely on your machine. Nothing is sent over the network — the app has no analytics, no crash reporting, and no auto-update. The two reasons it reads data from outside its own process:
+
+- **Clipboard polling.** A 0.5-second timer checks `NSPasteboard.changeCount` and, when it changes, reads the pasteboard string so it can display the decoded ISO in the menu bar. Contents are never logged or written to disk.
+- **Accessibility — selected text.** When you release a mouse-drag selection, the app reads the `kAXSelectedTextAttribute` of the focused UI element to decide whether to show the hover tooltip. Only text that matches a supported timestamp shape is shown; anything else is ignored. The selection is never logged or written to disk.
+
+All settings (colours, font, size, tooltip enabled/disabled) are stored in the standard macOS `UserDefaults` for the app's bundle identifier — on disk, not on a server.
+
 ## Tests
 
 ```bash

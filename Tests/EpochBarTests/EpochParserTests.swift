@@ -186,4 +186,19 @@ import Foundation
         // Must be interpreted as µs: 2025-01-01
         #expect(EpochParser.formatISO(parsed!) == "2025-01-01T00:00:00.000Z")
     }
+
+    @Test func largestValid19DigitSnowflakeDecodesInRange() {
+        // 19 nines still fit in UInt64 (max 1.84e19). (>> 22) + Twitter epoch
+        // lands around the year 2086 — inside the 2001-2099 sanity range — so
+        // the parser should accept it. Regression against off-by-one in the
+        // boundary guard or an accidental overflow introduced in the snowflake
+        // path.
+        #expect(EpochParser.parse("9999999999999999999") != nil)
+    }
+
+    @Test func rejectsTwentyDigitValue() {
+        // 20 digits isn't a supported shape — the \d{17,19} snowflake pattern
+        // rejects it even though the numeric value still fits in UInt64.
+        #expect(EpochParser.parse("10000000000000000000") == nil)
+    }
 }

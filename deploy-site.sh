@@ -11,11 +11,12 @@ cd "$SCRIPT_DIR"
 # 2. Drop the DMG next to the HTML so the download link resolves.
 cp .build/EpochBar.dmg site/EpochBar.dmg
 
-# 3. Ship to Cloudflare Pages. Prefer a local wrangler install; fall back to npx.
+# 3. Ship to Cloudflare Pages. Prefer a local wrangler install; fall back to a
+# pinned major-version npx to avoid a typo-squat in a future transitive install.
 if command -v wrangler >/dev/null 2>&1; then
     WRANGLER=(wrangler)
 else
-    WRANGLER=(npx --yes wrangler)
+    WRANGLER=(npx --yes wrangler@4)
 fi
 
 "${WRANGLER[@]}" pages deploy site --project-name epoch-bar
