@@ -8,6 +8,7 @@ final class StatusItemController {
     private var currentISO: String?
     private var flashTimer: Timer?
     private lazy var settingsWindow = SettingsWindowController()
+    private lazy var diagnosticsWindow = DiagnosticsWindowController()
 
     init(watcher: ClipboardWatcher) {
         self.watcher = watcher
@@ -23,14 +24,31 @@ final class StatusItemController {
     }
 
     private func configureButton() {
-        guard let button = statusItem.button else { return }
-        button.image = NSImage(systemSymbolName: "clock", accessibilityDescription: "EpochBar")
-        button.image?.isTemplate = true
-        button.imagePosition = .imageLeft
-        button.title = ""
+        statusItem.behavior = .removalAllowed   // user can ⌘-drag to reorder/remove
+        statusItem.autosaveName = "EpochBarStatusItem"
+
+        guard let button = statusItem.button else {
+            Log.status.fault("status item button is nil — icon will not appear; menu bar may be full")
+            Diagnostics.shared.recordStatusItemButton(present: false)
+            return
+        }
+        Diagnostics.shared.recordStatusItemButton(present: true)
+
+        if let symbol = NSImage(systemSymbolName: "clock", accessibilityDescription: "EpochBar") {
+            symbol.isTemplate = true
+            button.image = symbol
+            button.imagePosition = .imageLeft
+            button.title = ""
+        } else {
+            // Very-old-macOS or symbol-unavailable fallback: text glyph.
+            Log.status.warning("'clock' SF Symbol unavailable; falling back to text glyph")
+            button.image = nil
+            button.title = "⏱"
+        }
         button.target = self
         button.action = #selector(handleClick(_:))
         button.sendAction(on: [.leftMouseUp, .rightMouseUp])
+        Log.status.info("status item configured")
     }
 
     private func buildMenu() {
@@ -59,6 +77,14 @@ final class StatusItemController {
         )
         aboutItem.target = self
         menu.addItem(aboutItem)
+
+        let diagnosticsItem = NSMenuItem(
+            title: "Diagnostics…",
+            action: #selector(showDiagnostics),
+            keyEquivalent: ""
+        )
+        diagnosticsItem.target = self
+        menu.addItem(diagnosticsItem)
 
         menu.addItem(NSMenuItem.separator())
 
@@ -142,6 +168,10 @@ final class StatusItemController {
     @objc private func showAbout() {
         NSApp.activate(ignoringOtherApps: true)
         NSApp.orderFrontStandardAboutPanel(nil)
+    }
+
+    @objc private func showDiagnostics() {
+        diagnosticsWindow.showWindow()
     }
 
     @objc private func quit() {
